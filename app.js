@@ -1,3 +1,6 @@
+app.js
+
+
 const express = require("express");
 const app = express();
 const path = require("path");
@@ -14,11 +17,12 @@ const db = new sqlite3.Database("./questionDB.db", (err) => {
     }
 });
 
-ejs.renderFile('template.ejs', (err, str) => {
+ejs.renderFile('template.ejs', { /* データオブジェクト */ }, (err, str) => {
     if (err) {
         console.error(err);
         return;
     }
+    // 結果をHTMLファイルに書き込む
     fs.writeFileSync('output.html', str);
 });
 
