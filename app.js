@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
 const path = require("path");
+const ejs = require("ejs");
+const fs = require("fs");
 app.use(express.static(path.join(__dirname, 'public')));
 const sqlite3 = require("sqlite3").verbose();
 const db = new sqlite3.Database("./questionDB.db", (err) => {
@@ -12,6 +14,13 @@ const db = new sqlite3.Database("./questionDB.db", (err) => {
     }
 });
 
+ejs.renderFile('template.ejs', (err, str) => {
+    if (err) {
+        console.error(err);
+        return;
+    }
+    fs.writeFileSync('output.html', str);
+});
 
 
 app.get("/", (req, res) => {
