@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/questionCreate_style.css">
+    <title>Question Create</title>
+</head>
+<body>
+    <form action="/questionAdd" method="POST">
+        <h2>問題を追加</h2>
+        <textarea type="text" name="qText" placeholder="問題を入力してください" required></textarea>
+        <h2>答えを追加</h2>
+        <input type="text" name="qAnswer" placeholder="答えを入力してください" required>
+        <h2>難易度を選択</h2>
+        <dev class="btnContainer">
+            <a href="/displayBack?table=<%= table %>"  class="backBtn">戻る</a>
+            <select name="difficulty" required>
+                <option value="hard">ハード</option>
+                <option value="normal">ノーマル</option>
+                <option value="easy">イージー</option>
+            </select>
+            <input type="submit" class="addBtn" value="追加">
+        </dev>
+    </form>
+</body>
+</html>

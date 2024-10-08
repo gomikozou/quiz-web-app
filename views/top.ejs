@@ -1,6 +1,3 @@
-top.js
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,10 +7,19 @@ top.js
     <link rel="stylesheet" href="/styles/top_style.css">
 </head>
 <body>
-    <dev class="button-container">
-        <a href="/hard" class="hard">hard</a>
-        <a href="/normal" class="normal">Normal</a>
-        <a href="/easy" class="easy">easy</a>
-    </dev>
+    <div class="button-container">
+        <div class="button-row">
+            <a href="/hard" class="hard">hard</a>
+            <a href="/hardQIndex?table=hardQ" class="hardIndex">問題一覧</a>
+        </div>
+        <div class="button-row">
+            <a href="/normal" class="normal">Normal</a>
+            <a href="/normalQIndex?table=normalQ" class="normalIndex">問題一覧</a>
+        </div>
+        <div class="button-row">
+            <a href="/easy" class="easy">easy</a>
+            <a href="/easyQIndex?table=easyQ" class="easyIndex">問題一覧</a>
+        </div>
+    </div>
 </body>
 </html>

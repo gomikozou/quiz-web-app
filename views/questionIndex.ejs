@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/styles/questionIndex_style.css">
+</head>
+<body>
+    <div class="button-container">
+        <button id="backBtn" class="backBtn">メニューに戻る</button>
+        <button id="answerBtn" class="answerBtn">答えを表示</button>
+        <a href="/questionCreatePage?table=<%= table %>" class="qCreateBtn">問題を追加</a>
+    </div>
+
+    <% if (table == 'hardQ') { %>
+        <p class="tableText">難易度：ハード</p>
+    <% } else if (table == 'normalQ') { %>
+        <p class="tableText">難易度：ノーマル</p>
+    <% } else if (table == 'easyQ') { %>
+        <p class="tableText">難易度：イージー</p>
+    <% } %>
+
+    <div class="questionContainer">
+        <% questions.forEach(function(question) { %>
+            <div class="questionItem">
+                <p>
+                    <%= question.qText %>
+                    <span class="answer"><%= question.qAnswer %></span>
+                </p>
+                <form action="/questionDelete" method="POST" style="display:inline;">
+                    <input type="hidden" name="id" value="<%= question.id %>">
+                    <input type="hidden" name="table" value="<%= table %>">
+                    <button type="submit" class="deleteBtn">削除</button>
+                </form>
+            </div>
+        <% }); %>
+    </div>
+    
+        
+    <script>
+        const backBtn = document.getElementById('backBtn');
+        const answerBtn = document.getElementById('answerBtn');
+
+        backBtn.addEventListener('click', () => {
+            window.location.href = '/';
+        });
+
+        answerBtn.addEventListener('click', () => {
+            const answers = document.querySelectorAll('.answer');
+
+            if (answers[0].style.display === 'inline') {
+                answers.forEach(answer => {
+                    answer.style.display = 'none';
+                    answerBtn.textContent = '答えを表示';
+                });
+            } else {
+                answers.forEach(answer => {
+                    answer.style.display = 'inline';
+                    answerBtn.textContent = '答えを非表示';
+                });
+            }
+        });
+    </script>
+</body>
+</html>
