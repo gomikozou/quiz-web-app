@@ -48,6 +48,7 @@ app.get("/easy", (req, res) => {
     });
 });
 
+<<<<<<< HEAD
 app.get("/hardQIndex", (req, res) => {
     const table = req.query.table;
     db.all("SELECT * FROM hardQ", (err, row) => {
@@ -153,3 +154,6 @@ app.post("/questionDelete", (req, res) => {
 
 
 app.listen(3000);
+=======
+app.listen(3000);
+>>>>>>> dc2abe84889ae8a0f7a314bda92865f92f3ae765
