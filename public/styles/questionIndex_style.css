@@ -20,6 +20,7 @@ button {
 button:hover {
     background-color: white;
     color: black;
+    cursor: pointer;
 }
 
 .button-container {
@@ -51,12 +52,18 @@ button:hover {
 }
 
 .deleteBtn {
-    margin-left: 10px;
-    font-size: 15px;
+    margin-left: 40px;
+    font-size: 20px;
+}
+
+.questionText {
+    margin-left: 20px;
+    font-size: 30px;
 }
 
 .answer {
     display: none;
+    color: rgb(0, 110, 255);
 }
 
 .qCreateBtn {
@@ -75,5 +82,6 @@ button:hover {
 a:hover {
     background-color: white;
     color: black;
+    cursor: pointer;
 }
     

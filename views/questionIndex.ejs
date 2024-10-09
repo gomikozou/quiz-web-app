@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="button-container">
-        <button id="backBtn" class="backBtn">メニューに戻る</button>
+        <button id="backBtn" class="backBtn">戻る</button>
         <button id="answerBtn" class="answerBtn">答えを表示</button>
         <a href="/questionCreatePage?table=<%= table %>" class="qCreateBtn">問題を追加</a>
     </div>
@@ -24,14 +24,14 @@
     <div class="questionContainer">
         <% questions.forEach(function(question) { %>
             <div class="questionItem">
-                <p>
+                <p class="questionText">
                     <%= question.qText %>
                     <span class="answer"><%= question.qAnswer %></span>
                 </p>
-                <form action="/questionDelete" method="POST" style="display:inline;">
+                <form action="/questionDelete" method="POST">
                     <input type="hidden" name="id" value="<%= question.id %>">
                     <input type="hidden" name="table" value="<%= table %>">
-                    <button type="submit" class="deleteBtn">削除</button>
+                    <button class="deleteBtn">削除</button>
                 </form>
             </div>
         <% }); %>

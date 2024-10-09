@@ -18,8 +18,9 @@ app.get("/", (req, res) => {
     res.render("top.ejs");
 });
 
-app.get("/hard", (req, res) => {
-    db.all("SELECT * FROM hardQ", (err, row) => {
+app.get("/question", (req, res) => {
+    const table = req.query.table;
+    db.all(`SELECT * FROM ${table}`, (err, row) => {
         if (err) {
             console.error(err.message);
         } else {
@@ -28,52 +29,9 @@ app.get("/hard", (req, res) => {
     });
 });
 
-app.get("/normal", (req, res) => {
-    db.all("SELECT * FROM normalQ", (err, row) => {
-        if (err) {
-            console.error(err.message);
-        } else {
-            res.render("question.ejs", { questions: row });
-        }
-    });
-});
-
-app.get("/easy", (req, res) => {
-    db.all("SELECT * FROM easyQ", (err, row) => {
-        if (err) {
-            console.error(err.message);
-        } else {
-            res.render("question.ejs", { questions: row });
-        }
-    });
-});
-
-<<<<<<< HEAD
-app.get("/hardQIndex", (req, res) => {
+app.get("/questionIndex", (req, res) => {
     const table = req.query.table;
-    db.all("SELECT * FROM hardQ", (err, row) => {
-        if (err) {
-            console.error(err.message);
-        } else {
-            res.render("questionIndex.ejs", { questions: row, table: table });
-        }
-    });
-});
-
-app.get("/normalQIndex", (req, res) => {
-    const table = req.query.table;
-    db.all("SELECT * FROM normalQ", (err, row) => {
-        if (err) {
-            console.error(err.message);
-        } else {
-            res.render("questionIndex.ejs", { questions: row, table: table });
-        }
-    });
-});
-
-app.get("/easyQIndex", (req, res) => {
-    const table = req.query.table;
-    db.all("SELECT * FROM easyQ", (err, row) => {
+    db.all(`SELECT * FROM ${table}`, (err, row) => {
         if (err) {
             console.error(err.message);
         } else {
@@ -87,66 +45,36 @@ app.get("/questionCreatePage", (req, res) => {
     res.render("questionCreate.ejs", { table: table });
 });
 
-app.get("/displayBack", (req, res) => {
-    const table = req.query.table;
-    console.log(table);
-    switch (table) {
-        case "hardQ":
-            res.redirect(`/${table}Index?table=${table}`);
-            break;
-        case "normalQ":
-            res.redirect(`/${table}Index?table=${table}`);
-            break;
-        case "easyQ":
-            res.redirect(`/${table}Index?table=${table}`);
-            break;
-        default:
-            res.redirect("/");
-    }
-});
-
 app.post("/questionAdd", (req, res) => {
+    const table = req.body.table;
     const qText = req.body.qText;
     const qAnswer = req.body.qAnswer;
-    const difficulty = req.body.difficulty;
-
-    let table;
-    switch (difficulty) {
-        case "hard":
-            table = "hardQ";
-            break;
-        case "normal":
-            table = "normalQ";
-            break;
-        case "easy":
-            table = "easyQ";
-            break;
-        default:
-            return res.status(400).send("Invalid difficulty level");
-    }
+    console.log(table);
+    console.log(qText);
+    console.log(qAnswer);
 
     db.run(`INSERT INTO ${table} (qText, qAnswer) VALUES (?, ?)`, [qText, qAnswer], (err) => {
         if (err) {
             console.error(err.message);
             return res.status(500).send("データベースへの追加に失敗しました");
         } else {
-            res.redirect(`/${table}Index?table=${table}`);
+            res.redirect(`/questionIndex?table=${table}`);
         }
     });
 });
 
 app.post("/questionDelete", (req, res) => {
-    const questionId = req.body.id;
-    const tableName = req.body.table;
+    const id = req.body.id;
+    const table = req.body.table;
 
-    console.log(`テーブル名: ${tableName}, ID: ${questionId}`);
+    console.log(`テーブル名: ${table}, ID: ${id}`);
 
-    db.run(`DELETE FROM ${tableName} WHERE id = ?`, [questionId], (err) => {
+    db.run(`DELETE FROM ${table} WHERE id = ?`, [id], (err) => {
         if (err) {
             console.error("削除エラー:", err.message);
             return res.status(500).send("問題の削除に失敗しました");
         } else {
-            res.redirect(`/${tableName}Index?table=${tableName}`);
+            res.redirect(`/questionIndex?table=${table}`);
         }
     });
 });
@@ -154,6 +82,3 @@ app.post("/questionDelete", (req, res) => {
 
 
 app.listen(3000);
-=======
-app.listen(3000);
->>>>>>> dc2abe84889ae8a0f7a314bda92865f92f3ae765

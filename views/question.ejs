@@ -39,7 +39,7 @@
         nextBtn.addEventListener('click', nextQuestion);
         answerInput.addEventListener('keydown', (event) => {
             if (event.key === 'Enter') {
-                handleAnswer();
+                answer();
             }
         });
 
@@ -106,7 +106,7 @@
             backBtn.style.display = 'block';
         }
 
-        function handleAnswer() {
+        function answer() {
             const userAnswer = answerInput.value.trim();
 
             if (userAnswer === String(questions[currentQuestionIndex].qAnswer).trim()) {

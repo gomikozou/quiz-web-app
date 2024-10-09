@@ -13,15 +13,11 @@
         <h2>答えを追加</h2>
         <input type="text" name="qAnswer" placeholder="答えを入力してください" required>
         <h2>難易度を選択</h2>
-        <dev class="btnContainer">
-            <a href="/displayBack?table=<%= table %>"  class="backBtn">戻る</a>
-            <select name="difficulty" required>
-                <option value="hard">ハード</option>
-                <option value="normal">ノーマル</option>
-                <option value="easy">イージー</option>
-            </select>
-            <input type="submit" class="addBtn" value="追加">
-        </dev>
+        <div class="btnContainer">
+            <a href="/questionIndex?table=<%= table %>"  class="backBtn">戻る</a>
+            <input type="hidden" name="table" value="<%= table %>">
+            <button type="submit">追加</button>
+        </div>
     </form>
 </body>
 </html>
