@@ -4,19 +4,22 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 const path = require("path");
 app.use(express.static(path.join(__dirname, 'public')));
+app.set('views', path.join(__dirname, 'views'));
 
 const mysql = require("mysql2");
 const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'nine3690',
-    database: 'questiondb'
+    host: "localhost",
+    user: "root",
+    password: "nine3690",
+    database: "questiondb"
 });
 
 db.connect((err) => {
     if (err) {
-        console.error('データベース接続エラー: ' + err.stack);
-        return;
+        console.error(err.message);
+        console.log("データベースに接続できませんでした");
+    } else {
+        console.log("データベースに接続しました");
     }
     console.log('データベースに接続しました');
 });
@@ -27,7 +30,7 @@ app.get("/", (req, res) => {
 
 app.get("/question", (req, res) => {
     const table = req.query.table;
-    db.query(`SELECT * FROM ${table}`, (err, rows) => {
+    db.query(`SELECT * FROM ??`, [table], (err, rows) => {
         if (err) {
             console.error(err.message);
         } else {
@@ -38,7 +41,7 @@ app.get("/question", (req, res) => {
 
 app.get("/questionIndex", (req, res) => {
     const table = req.query.table;
-    db.query(`SELECT * FROM ${table}`, (err, rows) => {
+    db.query(`SELECT * FROM ??`, [table], (err, rows) => {
         if (err) {
             console.error(err.message);
         } else {
@@ -57,8 +60,7 @@ app.post("/questionAdd", (req, res) => {
     const qText = req.body.qText;
     const qAnswer = req.body.qAnswer;
 
-    const query = `INSERT INTO ${table} (qText, qAnswer) VALUES (?, ?)`;
-    db.query(query, [qText, qAnswer], (err) => {
+    db.query(`INSERT INTO ?? (qText, qAnswer) VALUES (?, ?)`, [table, qText, qAnswer], (err) => {
         if (err) {
             console.error(err.message);
             return res.status(500).send("データベースへの追加に失敗しました");
@@ -72,8 +74,7 @@ app.post("/questionDelete", (req, res) => {
     const id = req.body.id;
     const table = req.body.table;
 
-    const query = `DELETE FROM ${table} WHERE id = ?`;
-    db.query(query, [id], (err) => {
+    db.query(`DELETE FROM ?? WHERE id = ?`, [table, id], (err) => {
         if (err) {
             console.error("削除エラー:", err.message);
             return res.status(500).send("問題の削除に失敗しました");
@@ -83,6 +84,4 @@ app.post("/questionDelete", (req, res) => {
     });
 });
 
-app.listen(3000, () => {
-    console.log("サーバーが起動しました");
-});
+app.listen(3000);
